@@ -12,8 +12,8 @@ baselines = [2.5, 5, 7.5, 10]
 incidence_degrees = np.arange(30, 41, 0.02)
 incidence_radians =  incidence_degrees / 180 * pi
 
-styles = ['-.', '-', ':', '--']
-widths = [1, 3, 1, 1]
+styles = ['-.', ':', '-', '--']
+widths = [1, 1, 3, 1]
 # for degree in incidence_degrees:
 for i, baseline in enumerate(baselines):
     d_phase = 2* pi * baseline * np.sin(incidence_radians) / (wavelength*v_orb)

@@ -22,7 +22,7 @@ for i, cur_vel in enumerate(current_velocities):
     label = r'$v_{surf}$' + ' = {} m/s'.format(cur_vel)
     plt.plot(incidence_degrees, phase_deg, label=label, linestyle=styles[i], color='black')
 
-plt.xlabel('Incidence angle ' + r'$\theta_i$' + ' [' + r'$^\circ$' + ']')
+plt.xlabel(r'$\vartheta$' + ' [' + r'$^\circ$' + ']')
 plt.ylabel('ATI phase ' + r'$\varphi_{ATI}$' + ' [' + r'$^\circ$' + ']')
 plt.xlim(30, 40)
 plt.legend()
