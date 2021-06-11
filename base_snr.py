@@ -6,7 +6,6 @@ from matplotlib.ticker import StrMethodFormatter, NullFormatter
 
 # dtart ~ 0.04
 # N_s = 3 # number of sub swaths?
-antenna_length = 15
 wavelength = 0.0555
 
 # v_orb = 7453 # from mean orbit altitude 798km
@@ -29,7 +28,7 @@ gamma_quant = 0.99
 
 # baselines = np.power(10, np.arange(0.7,3.3,0.02))
 
-baselines = np.arange(4,17,0.02)
+baselines = np.arange(3,10.02,0.02)
 baseline_default = 7.5
 
 ## number of looks
@@ -40,10 +39,10 @@ incidence_degrees = np.arange(30, 41, 2)
 incidence_radians =  incidence_degrees * (180 / pi)
 incidence_default = 35/180 * pi
 
-# plt.vlines(7.5,0.01,0.6,color='g')
-plt.hlines(0.03,4,15,color='c')
 
-styles = ['-', '-.', ':', '--', '-']
+plt.hlines(0.1,baselines.min(),baselines.max(),color='c')
+
+styles = ['-.', '-', ':', '--', '-']
 # for angle in incidence_angles:
 # for baseline in baselines:
 for i, snr in enumerate(snr_dbs):
@@ -78,7 +77,7 @@ plt.xlabel(r'$B_{ATI}$'+' [m]')
 # plt.xscale('log')
 # plt.xticks(baselines)
 # plt.yscale('log')
-plt.ylim(0.02,0.6)
+
 
 # plt.ylabel("Phase standard deviation[rad]")
 plt.ylabel(r'$\sigma_{v_g}$'+ ' [m/s]')
@@ -90,9 +89,10 @@ ax.yaxis.set_major_formatter(StrMethodFormatter('{x:.2f}'))
 ax.xaxis.set_major_formatter(StrMethodFormatter('{x:.0f}'))
 ax.xaxis.set_minor_formatter(StrMethodFormatter('{x:.0f}'))
 
-ax.set_xticks([10,11,12,13,14,15])
-ax.set_yticks([0.02,0.03,0.05,0.07,0.1, 0.2, 0.3, 0.5])
-plt.xlim((4, 15))
+# ax.set_xticks([10,11,12,13,14,15])
+ax.set_yticks([0.04,0.05,0.07,0.1, 0.2, 0.3, 0.5, 0.8])
+plt.xlim((baselines.min(), baselines.max()))
+# plt.ylim(0.02,0.6)
 # ax.xaxis.get_ticklabels()[0].set_visible(False)
 # ax.xaxis.get_ticklabels()[-1].set_visible(False)
 

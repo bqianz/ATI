@@ -32,7 +32,7 @@ gamma_amb = 0.96
 # baselines = np.power(10, np.arange(0.7,3.3,0.02))
 
 # baselines = np.arange(5,17,0.02)
-baselines = [4.5, 7.5, 10.5, 13.5]
+baselines = [2.5, 5, 7.5, 10]
 # baselines = np.arange(5,17,2)
 baseline_default = 7.5
 
@@ -46,11 +46,11 @@ incidence_degrees = np.arange(30, 41, 0.02)
 incidence_radians =  incidence_degrees * (180 / pi)
 incidence_default = 35/180 * pi
 
-plt.hlines(0.03,0,20,color='c')
+plt.hlines(0.1,0,20,color='c')
 
-styles = ['-', '-', '-.', ':', '--']
-widths = [1, 3, 1, 1, 1]
-# for degree in incidence_degrees:
+styles = [':', '-.', '-', '--']
+widths = [1, 1, 3, 1]
+
 for i, baseline in enumerate(baselines):
 # for snr in snr_dbs:
 # for wind_speed in wind_speeds:
@@ -73,11 +73,9 @@ for i, baseline in enumerate(baselines):
     # label=r'$\theta_i$' + ' = {}'.format(degree) + r'$^\circ$'
     # label = 'SNR = {} dB'.format(snr)
     
-    plt.loglog(snr_dbs, vrp_std, color = 'r', linestyle=styles[i], linewidth=widths[i])
+    plt.semilogy(snr_dbs, vrp_std, color = 'r', linestyle=styles[i], linewidth=widths[i])
 
 for i, baseline in enumerate(baselines):
-# for snr in snr_dbs:
-# for wind_speed in wind_speeds:
 
     # gamma_snr = 1/(1+ 1/10**(snr/10))
     ## coherence time
@@ -104,8 +102,31 @@ for i, baseline in enumerate(baselines):
     if baseline==7.5:
         label += ' (RS2)'
 
-    plt.loglog(snr_dbs, vrp_std, color = 'black', linestyle=styles[i], linewidth=widths[i], label=label)
+    plt.semilogy(snr_dbs, vrp_std, color = 'black', linestyle=styles[i], linewidth=widths[i], label=label)
 
+for i, baseline in enumerate(baselines):
+# for snr in snr_dbs:
+# for wind_speed in wind_speeds:
+
+    # gamma_snr = 1/(1+ 1/10**(snr/10))
+    ## coherence time
+    t_c = 3.29 * wavelength / wind_speed_default
+
+    # temporal baseline lag
+    t_ati = baseline / (2 * v_orb)
+
+    co_t = np.exp(-1 * np.square(t_ati) / np.square(t_c) )
+    coherence = co_t * gamma_snrs * gamma_amb * gamma_quant
+    co_squared = np.square(coherence)
+
+    phase_std = np.sqrt(np.divide(1 - co_squared,  2 * N2_default * co_squared))
+    vrp_std = np.divide(phase_std * wavelength, np.sin(incidence_default) * 4 * pi*t_ati)
+        
+    
+    # label=r'$\theta_i$' + ' = {}'.format(degree) + r'$^\circ$'
+    # label = 'SNR = {} dB'.format(snr)
+    
+    plt.semilogy(snr_dbs, vrp_std, color = 'r', linestyle=styles[i], linewidth=widths[i])
 
 
 ax = plt.gca()

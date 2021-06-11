@@ -2,16 +2,17 @@ from math import pi
 import numpy as np
 import matplotlib.pyplot as plt
 
+from matplotlib.ticker import StrMethodFormatter, NullFormatter
 # dtart ~ 0.04
 # N_s = 3 # number of sub swaths?
-antenna_length = 15
+
 wavelength = 0.0555
 
 # v_orb = 7453 # from mean orbit altitude 798km
 v_orb = 7545 # ECEF Velocity
 
 wind_speed_default = 2.5
-wind_speeds = np.array([3,6,9,12,15])
+wind_speeds = np.array([1,3,6,9,12])
 
 ## snr coherence
 # snrs = np.arange(3,20)
@@ -24,12 +25,9 @@ gamma_snr_default = 0.76 # 5dB
 gamma_quant = 0.99
 gamma_amb = 0.96
 
-# baselines = np.arange(40,160,20)
 baselines = np.power(10, np.arange(0.7,3.4,0.02))
-# baselines = np.arange(5,17,0.02)
-baseline_default = 10
+# baselines = np.arange(3,10.02,0.02)
 
-# baselines = np.arange(5,17)
 baseline_default = 7.5
 
 ## number of looks
@@ -40,8 +38,8 @@ incidence_degrees = np.arange(30, 41, 2)
 incidence_radians =  incidence_degrees * (180 / pi)
 incidence_default = 35/180 * pi
 
-plt.hlines(0.03,5,2000,color='c')
-styles = ['-', '-.', ':', '--', '-']
+plt.hlines(0.1,baselines.min(),baselines.max(),color='c')
+styles = ['-.', '-', ':', '--', '-']
 # for angle in incidence_angles:
 # for baseline in baselines:
 # for angle in incidence_angles:
@@ -68,14 +66,24 @@ for i, wind_speed in enumerate(wind_speeds):
     # label = 'SNR = {}dB'.format(snr)
     plt.loglog(baselines, vrp_std, linestyle = styles[i], color = 'black', label=label)
 
+ax = plt.gca()
+
+ax.yaxis.set_major_formatter(StrMethodFormatter('{x:.2f}'))
+# ax.yaxis.set_minor_formatter(StrMethodFormatter('{x:.2f}'))
+
+ax.xaxis.set_major_formatter(StrMethodFormatter('{x:.0f}'))
+# ax.xaxis.set_minor_formatter(StrMethodFormatter('{x:.0f}'))
+
 # plt.xlabel("SNR[dB]")
 plt.xlabel(r'$B_{ATI}$'+' [m]')
 # plt.xlabel("wind_speeds")
 # plt.xscale('log')
 # plt.xticks(baselines)
+# ax.set_yticks([0.1, 0.2, 0.3])
 # plt.yscale('log')
+
 plt.ylim((1E-3, 1))
-plt.xlim((10**0.7, 2E3))
+plt.xlim((baselines.min(), baselines.max()))
 
 # plt.ylabel("Phase standard deviation[rad]")
 plt.ylabel(r'$\sigma_{v_g}$'+ ' [m/s]')

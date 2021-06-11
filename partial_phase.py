@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 v_orb = 7545 # ECEF Velocity
 wavelength = 0.0555
 
-baselines = [4.5, 7.5, 10.5, 13.5]
+baselines = [2.5, 5, 7.5, 10]
 
 # incidence_degrees = np.power(10, np.arange(1.47, 1.61, 0.01))
 incidence_degrees = np.arange(30, 41, 0.02)

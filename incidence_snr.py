@@ -6,7 +6,6 @@ from matplotlib.ticker import StrMethodFormatter, NullFormatter, AutoMinorLocato
 
 # dtart ~ 0.04
 # N_s = 3 # number of sub swaths?
-antenna_length = 15
 wavelength = 0.0555
 
 # v_orb = 7453 # from mean orbit altitude 798km
@@ -44,9 +43,9 @@ incidence_degrees = np.power(10, np.arange(1.47, 1.61, 0.01))
 incidence_radians =  incidence_degrees / 180 * pi
 incidence_default = 35/180 * pi
 
-plt.hlines(0.03,30,40,color='c')
+plt.hlines(0.1,30,40,color='c')
 
-styles = ['-', '-.', ':', '--', '-']
+styles = ['-.', '-', ':', '--', '-']
 # for degree in incidence_degrees:
 # for baseline in baselines:
 for i, snr in enumerate(snr_dbs):
@@ -100,11 +99,11 @@ ax.set_yticks([0.03,0.05, 0.7,0.1,0.2,0.3])
 ax.xaxis.get_ticklabels()[0].set_visible(False)
 ax.xaxis.get_ticklabels()[-1].set_visible(False)
 # ax.set_xticklabels([])
-# ax.set_xticklabels([30,35,40])
+ax.set_xticklabels([30, 32, 34, 36, 38, 40])
 # ax.xaxis.set_minor_locator(AutoMinorLocator(10))
 
 plt.xlim((30,40))
-plt.ylim((0.02, 0.4))
+# plt.ylim((0.04, 0.5))
 
 # plt.ylabel("Phase standard deviation[rad]")
 plt.ylabel(r'$\sigma_{v_g}$'+ ' [m/s]')
